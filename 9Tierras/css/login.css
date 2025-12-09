@@ -1,0 +1,397 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    /* background: linear-gradient(90deg, #e2e2e2, #c9d6ff);  */
+    background-image: url(img/cerveza1.jpg);
+}
+
+/* ===== Contenedor principal ===== */
+.container {
+    position: relative;
+    width: 850px;
+    height: 550px;
+    /* background: #E39F94; */
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, .2);
+    overflow: hidden;  
+    background-color: #887c67;
+    margin: 20px;
+}
+
+/* ===== Panel derecho con el formulario ===== */
+.form-box {
+    position: absolute;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background-color: #887c67;
+    display: flex;
+    justify-content: center;
+    /* Centra horizontalmente */
+    align-items: center;
+    /* Centra verticalmente */
+    flex-direction: column;
+    /* Ordena en columna */
+    padding: 40px;
+    box-sizing: border-box;
+    color: black;
+    text-align: center;
+    z-index: 1;
+    transition: .6s ease-in-out 1.2s, visibility 0s 1s;
+}
+
+
+.container.active .form-box{
+right: 50%;
+
+}
+
+/* ===== Parte del registro ===== */
+
+.form-box.register {
+    visibility: hidden;
+
+}
+
+
+.container.active .form-box.register{
+    visibility: visible;
+}
+
+.form-box form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    /* Espacio entre campos */
+    align-items: center;
+}
+
+h1 {
+    margin-bottom: 10px;
+    font-size: 32px;
+}
+
+
+
+.btn{
+ width: 80%;
+    padding: 10px;
+    margin-top: 15px;
+    cursor: pointer;
+    background-color: #4a90e2;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    transition: 0.3s;
+
+}
+
+
+
+
+
+
+/* ===== Inputs e íconos ===== */
+.input-box {
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 10px 35px 10px 10px;
+    box-sizing: border-box;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    outline: none;
+}
+
+.input-box img {
+    position: absolute;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    opacity: 0.7;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* ===== Enlace olvidaste contraseña ===== */
+.forgot-link {
+    width: 80%;
+    text-align: left;
+}
+
+.forgot-link a {
+    text-decoration: none;
+    color: #3a7acb;
+    font-size: 14px;
+}
+
+.forgot-link a:hover {
+    text-decoration: underline;
+}
+
+/* ===== Botón Ingresar ===== */
+
+
+/* ===== Texto e íconos sociales ===== */
+.form-box p {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.iconos-sociales {
+    margin-top: 10px;
+}
+
+.iconos-sociales img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.iconos-sociales a {
+    display: inline-block;
+    margin: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===== Mensaje de la izquierda en el iniciar sesion ===== */
+.toggle-box {
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+
+}
+
+
+.toggle-box::before {
+
+    content: '';
+    position: absolute;
+    left: -250%;
+    width: 300%;
+    height: 100%;
+   /* background: #3a7acb; */
+    background-image: url(img/madera.jpeg); 
+ /*  border: 2px solid red;   */
+    border-radius: 150px;
+    z-index: 2;
+     transition: 1.8s ease-in-out;
+
+
+}
+
+
+
+.container.active .toggle-box::before{
+left: 50%; 
+}
+
+
+
+
+
+
+
+
+.toggle-panel.toggle-right {
+    right: -50%;
+    transition-delay: .6s;
+
+}
+
+
+.container.active .toggle-panel.toggle-right{
+right: 0%; 
+transition-delay: 1.2s;
+}
+
+
+
+.toggle-panel h1,
+p {
+    color: aliceblue;
+
+
+}
+
+/*  Estilo del logo del taggle */
+.toggle-panel img {
+    width: 180px;
+    /* tamaño controlado */
+    height: auto;
+    /* mantiene proporción */
+    margin-bottom: 20px;
+    /* separación con el texto */
+    margin-top: 20px;
+    /* un poco de margen arriba */
+    object-fit: contain;
+    /* evita deformaciones */
+    border-radius: 5px;
+
+}
+
+
+.toggle-panel {
+    position: absolute;
+    width: 50%;
+    height: 100%;   
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* background-image: url(img/madera.jpeg);  */
+    z-index: 2;
+
+
+
+}
+
+.toggle-panel.toggle-left{
+left: 0;
+transition-delay: 1.2s;
+}
+
+.container.active .toggle-panel.toggle-left{
+left: -50%; 
+transition-delay: .6s;
+}
+
+
+.toggle-panel .btn {
+    width: 160px;
+    height: 46px;
+    background: transparent;
+    border: 2px solid #aaa;
+    box-shadow: none;
+    color: white;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+
+/*  Para la pantalla en celular  */
+
+
+@media screen and (max-width:900px){
+    .container{
+
+        height: calc(140vh - 30px);
+    }
+
+    .form-box{
+
+    
+        width: 100%;
+        height: 60%;
+        bottom: 0;
+    }
+
+
+    .container.active .form-box{
+right: 0;
+bottom: 30%;
+
+
+
+    }
+
+    .toggle-box::before{
+width: 100%;
+height: 300%;
+left: 0;
+top: -260%;
+border-radius: 20vw;
+
+}
+
+.container.active .toggle-box::before{
+top: 65%;
+left: 0%;
+}
+
+.toggle-panel{
+
+width: 100%;
+height: 35%;
+border-radius: 20vw;
+
+
+}
+
+
+.toggle-panel.toggle-left{
+top: 0;
+
+}
+
+
+.container.active .toggle-panel.toggle-left{
+left: 0%;
+top: -40%;
+
+
+}
+
+.toggle-panel.toggle-panel.toggle-right{
+right: 0;
+bottom: -40%;
+
+}
+
+
+.container.active .toggle-panel.toggle-right{
+    bottom: 0;
+}
+
+
+@media screen and (max-width:400px){
+
+.form-box{
+
+    padding: 20px;
+}
+
+.toggle-panel h1{
+font-size: 30px;
+
+}
+
+
+
+
+}
+
+
+
+}

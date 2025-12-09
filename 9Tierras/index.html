@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>9 Tierras – Cervecería</title>
+  <meta name="description" content="Cervecería 9 Tierras – tradición y sabor en cada sorbo" />
+
+  <!-- Fuente -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="site-header" id="h">
+    <nav class="nav container" aria-label="Principal">
+      <img src="css/img/LOGO.png" alt="" class="estilo-logo">
+
+
+
+      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-menu" aria-label="Abrir menú">☰</button>
+      <ul id="primary-menu" class="nav-links">
+  <li><a class="active" href="index.html">Inicio</a></li>
+  <li><a href="catalogo.html">Catálogo</a></li>
+  <li><a href="reservas.html">Reservas</a></li>
+  <li><a href="#contacto">Contacto</a></li>
+  <li><a href="admin.html">Admin</a></li>
+</ul>
+
+    </nav>
+  </header>
+
+
+
+  <!-- HERO con foto de la cervecería -->
+  <section class="hero hero-full" style="--hero-img: url('img/cerveza1.jpg');">
+    <div class="container hero-content">
+      <h1>Tradición y sabor en cada sorbo</h1>
+      <p>Pequeños lotes, grandes historias. Descubre nuestras cervezas artesanales.</p>
+      <form id="subscribeForm" class="inline-form" aria-label="Suscripción" novalidate>
+        <input aria-label="Correo electrónico" type="email" name="email" placeholder="tu@correo.com" required />
+          <button class="btn primary" type="submit">Suscribirme</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Highlights (más orden visual) -->
+  <section class="section container">
+    <header class="section-header">
+      <h2>Nuestras cervezas</h2>
+      <p class="muted">Ingredientes seleccionados, procesos cuidados y recetas con carácter.</p>
+    </header>
+
+    <div class="cards three">
+
+      <article class="card ipa">
+        <h3>IPA</h3>
+        <p>Amarga y cítrica, final seco. Ideal para paladares lupulados.</p>
+        <a class="btn ghost" href="catalogo.html">Ver catálogo</a>
+      </article>
+
+      <article class="card stout">
+        <h3>Stout</h3>
+        <p>Notas a café y cacao con cuerpo sedoso. Perfecta para la noche.</p>
+        <a class="btn ghost" href="catalogo.html">Ver catálogo</a>
+      </article>
+
+      <article class="card lager">
+        <h3>Lager</h3>
+        <p>Refrescante, limpia y balanceada. Para cualquier momento.</p>
+        <a class="btn ghost" href="catalogo.html">Ver catálogo</a>
+      </article>
+
+
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <section id="contacto" class="section container">
+    <header class="section-header">
+      <h2>Contáctanos</h2>
+      <p class="muted">¿Tienes dudas, quieres distribuir o reservar para grupos? Escríbenos.</p>
+    </header>
+
+<form id="contactForm" class="form grid-2" novalidate>
+  <label>
+    <span>Nombre</span>
+    <input type="text" name="nombre" required minlength="2" />
+  </label>
+  <label>
+    <span>Correo</span>
+    <input type="email" name="correo" required pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
+      title="Por favor ingresa un correo válido" />
+  </label>
+  <label class="grid-span-2">
+    <span>Mensaje</span>
+    <textarea name="mensaje" rows="4" required minlength="10"></textarea>
+  </label>
+  <div class="form-actions grid-span-2">
+    <button type="submit" class="btn primary">Enviar</button>
+  </div>
+
+  <img src="css/img/9T.png" alt="Decoración" class="corner-img" />
+</form>
+
+  </section>
+
+  <!-- Instagram -->
+  <section class="section container" aria-labelledby="ig-title">
+    <header class="section-header">
+      <h2 id="ig-title">Síguenos en Instagram</h2>
+      <p class="muted">Novedades, lotes especiales y eventos.</p>
+    </header>
+
+    <div class="ig-block">
+      <a class="btn primary" href="https://www.instagram.com/9tcerveceria/" target="_blank" rel="noopener">
+        @9tierras – Seguir
+      </a>
+
+      <!-- Grilla opcional de imágenes (pon miniaturas si quieres) -->
+      <div class="ig-grid">
+
+
+        <!-- Reemplaza por tus thumbs (120–300px) o elimina el grid si no los tienes -->
+        <a href="https://www.instagram.com/9tcerveceria/" target="_blank" rel="noopener"><img src="img/ig2.jpg"
+            alt="9 Tierras 2"></a>
+        <a href="https://www.instagram.com/9tcerveceria/" target="_blank" rel="noopener"><img src="img/ig3.jpg"
+            alt="9 Tierras 3"></a>
+        <a href="https://www.instagram.com/9tcerveceria/" target="_blank" rel="noopener"><img src="img/ig4.jpg"
+            alt="9 Tierras 4"></a>
+        <a href="https://www.instagram.com/9tcerveceria/" target="_blank" rel="noopener"><img src="img/ig5.jpg"
+            alt="9 Tierras 5"></a>
+        <a href="https://www.instagram.com/9tcerveceria/" target="_blank" rel="noopener"><img src="img/ig6.jpg"
+            alt="9 Tierras 6"></a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© <span id="year"></span> Cervecería 9 Tierras</small>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <!-- Si usas backend local, cambia esto -->
+  <script>window.API_BASE = 'http://localhost:4000/api';</script>
+  <script src="js/main.js" defer></script>
+
+
+
+  <script>
+
+
+
+    // Año
+    const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
+
+    // Toggle menú móvil (si lo usas)
+    const toggle = document.querySelector('.nav-toggle');
+    const menu = document.getElementById('primary-menu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', () => {
+        const ex = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!ex));
+        menu.classList.toggle('open', !ex);
+      });
+    }
+  </script>
+
+
+
+
+</body>
+
+</html>

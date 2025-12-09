@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- ============================
+               LOGIN
+        ============================ -->
+        <div class="form-box login">
+            <form id="loginForm">
+                <h1>Login</h1>
+
+                <div class="input-box">
+                    <input type="email" id="loginEmail" placeholder="Correo electrónico" required>
+                    <img src="css/img/user.png" alt="">
+                </div>
+
+                <div class="input-box">
+                    <input type="password" id="loginPassword" placeholder="Contraseña" required>
+                    <img src="css/img/lock-keyhole.png" alt="">
+                </div>
+
+                <p id="loginError" style="color:red; font-size:14px;"></p>
+
+                <button type="submit" class="btn">Ingresar</button>
+
+                <p>o inicia sesión con plataformas sociales</p>
+                <div class="iconos-sociales">
+                    <a href="#"><img src="css/img/google.png" alt=""></a>
+                </div>
+            </form>
+        </div>
+
+
+        <!-- ============================
+               REGISTRO
+        ============================ -->
+        <div class="form-box register">
+            <form id="registerForm">
+                <h1>Registro</h1>
+
+                <div class="input-box">
+                    <input type="text" id="regNombre" placeholder="Nombre de usuario" required>
+                    <img src="css/img/user.png" alt="">
+                </div>
+
+                <div class="input-box">
+                    <input type="email" id="regCorreo" placeholder="Correo electrónico" required>
+                    <img src="css/img/envelope.png" alt="">
+                </div>
+
+                <div class="input-box">
+                    <input type="password" id="regPassword" placeholder="Contraseña" required>
+                    <img src="css/img/lock-keyhole.png" alt="">
+                </div>
+
+                <div class="input-box">
+                    <input type="password" id="regConfirm" placeholder="Confirmar contraseña" required>
+                    <img src="css/img/lock-keyhole.png" alt="">
+                </div>
+
+                <p id="registerError" style="color:red; font-size:14px;"></p>
+                <p id="registerOk" style="color:green; font-size:14px;"></p>
+
+                <button type="submit" class="btn">Registrate</button>
+
+                <p>o regístrate con plataformas sociales</p>
+                <div class="iconos-sociales">
+                    <a href="#"><img src="css/img/google.png" alt=""></a>
+                </div>
+            </form>
+        </div>
+
+
+        <!-- ============================
+               PANEL LATERAL
+        ============================ -->
+        <div class="toggle-box">
+            <div class="toggle-panel toggle-left">
+                <img src="css/img/LOGO.png" alt="">
+                <h1>Hola, Bienvenido!</h1>
+                <p>No tienes una cuenta?</p>
+                <button class="btn registro-btn">Registrate</button>
+            </div>
+
+            <div class="toggle-panel toggle-right">
+                <img src="css/img/LOGO.png" alt="">
+                <h1>Bienvenido de vuelta!</h1>
+                <p>¿Ya tienes cuenta?</p>
+                <button class="btn login-btn">Ingresa tu cuenta</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="js/login.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin - 9 Tierras</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .wrap{max-width:1000px;margin:30px auto;padding:16px}
+    .card{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:16px;margin-bottom:16px}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+    label{display:block;font-size:14px;opacity:.9;margin-bottom:6px}
+    input{width:100%;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.35);color:#fff}
+    button{padding:10px 14px;border-radius:12px;border:0;cursor:pointer}
+    .btn{background:#f0b23a;color:#111;font-weight:700}
+    .btn2{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.18)}
+    .danger{background:#ff4d4d;color:#111;font-weight:800}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px;border-bottom:1px solid rgba(255,255,255,.12);text-align:left}
+    small{opacity:.75}
+    .top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+    .hidden{display:none}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <div class="top">
+      <h1>Panel Admin – Cervezas</h1>
+      <div>
+        <a class="btn2" href="catalogo.html" style="text-decoration:none;padding:10px 14px;border-radius:12px;display:inline-block">Ver catálogo</a>
+        <button id="logoutBtn" class="btn2 hidden">Cerrar sesión</button>
+      </div>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="loginCard" class="card">
+      <h3>Iniciar sesión</h3>
+      <div class="row">
+        <div>
+          <label>Email</label>
+          <input id="email" placeholder="admin@9tierras.com" />
+        </div>
+        <div>
+          <label>Contraseña</label>
+          <input id="password" type="password" placeholder="1234" />
+        </div>
+      </div>
+      <div style="margin-top:10px">
+        <button id="loginBtn" class="btn">Entrar</button>
+      </div>
+      <p id="loginMsg"></p>
+      <small>Usuario demo: admin@9tierras.com / 1234</small>
+    </div>
+
+    <!-- FORM CRUD -->
+    <div id="crudCard" class="card hidden">
+      <h3 id="formTitle">Crear cerveza</h3>
+
+      <input type="hidden" id="beerId" />
+
+      <div class="row3">
+        <div>
+          <label>Nombre *</label>
+          <input id="nombre" placeholder="Ej: Rubia 9 Tierras" />
+        </div>
+        <div>
+          <label>Estilo</label>
+          <input id="estilo" placeholder="Ej: Golden Ale" />
+        </div>
+        <div>
+          <label>Precio *</label>
+          <input id="precio" type="number" placeholder="12000" />
+        </div>
+      </div>
+
+      <div style="margin-top:10px">
+        <label>URL Imagen</label>
+        <input id="img" placeholder="https://..." />
+      </div>
+
+      <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+        <button id="saveBtn" class="btn">Guardar</button>
+        <button id="clearBtn" class="btn2">Limpiar</button>
+      </div>
+    </div>
+
+    <!-- LISTA -->
+    <div id="listCard" class="card hidden">
+      <h3>Listado</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Estilo</th>
+            <th>Precio</th>
+            <th style="width:220px">Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+
+  </div>
+
+<script>
+  const loginCard = document.getElementById("loginCard");
+  const crudCard = document.getElementById("crudCard");
+  const listCard = document.getElementById("listCard");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const loginMsg = document.getElementById("loginMsg");
+
+  const beerId = document.getElementById("beerId");
+  const nombre = document.getElementById("nombre");
+  const estilo = document.getElementById("estilo");
+  const precio = document.getElementById("precio");
+  const img = document.getElementById("img");
+  const formTitle = document.getElementById("formTitle");
+  const tbody = document.getElementById("tbody");
+
+  async function api(url, options = {}) {
+    // ✅ importantísimo: credentials include para que mande la cookie de sesión
+    const resp = await fetch(url, { ...options, credentials: "include" });
+    let data = null;
+    try { data = await resp.json(); } catch {}
+    return { resp, data };
+  }
+
+  function setLoggedInUI(isLogged) {
+    loginCard.classList.toggle("hidden", isLogged);
+    crudCard.classList.toggle("hidden", !isLogged);
+    listCard.classList.toggle("hidden", !isLogged);
+    logoutBtn.classList.toggle("hidden", !isLogged);
+  }
+
+  function clearForm() {
+    beerId.value = "";
+    nombre.value = "";
+    estilo.value = "";
+    precio.value = "";
+    img.value = "";
+    formTitle.textContent = "Crear cerveza";
+  }
+
+  async function login() {
+    loginMsg.textContent = "";
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    const { resp, data } = await api("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
+
+    if (!resp.ok || !data?.ok) {
+      loginMsg.textContent = data?.error || "No se pudo iniciar sesión";
+      return;
+    }
+
+    setLoggedInUI(true);
+    await loadBeers();
+  }
+
+  async function logout() {
+    await api("/api/logout", { method: "POST" });
+    setLoggedInUI(false);
+    clearForm();
+  }
+
+  async function loadBeers() {
+    const { resp, data } = await api("/api/admin/beers");
+    if (!resp.ok || !data?.ok) {
+      alert(data?.error || "No autorizado. Inicia sesión.");
+      setLoggedInUI(false);
+      return;
+    }
+
+    const beers = data.beers || [];
+    tbody.innerHTML = "";
+
+    beers.forEach(b => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${escapeHtml(b.nombre)}</td>
+        <td>${escapeHtml(b.estilo || "")}</td>
+        <td>$${Number(b.precio || 0).toLocaleString()}</td>
+        <td>
+          <button class="btn2" data-edit="${b._id}">Editar</button>
+          <button class="danger" data-del="${b._id}">Eliminar</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    tbody.querySelectorAll("[data-edit]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id = btn.dataset.edit;
+        const b = beers.find(x => x._id === id);
+        beerId.value = b._id;
+        nombre.value = b.nombre || "";
+        estilo.value = b.estilo || "";
+        precio.value = b.precio ?? "";
+        img.value = b.img || "";
+        formTitle.textContent = "Editar cerveza";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
+
+    tbody.querySelectorAll("[data-del]").forEach(btn => {
+      btn.addEventListener("click", async () => {
+        if (!confirm("¿Eliminar esta cerveza?")) return;
+        const id = btn.dataset.del;
+
+        const { resp, data } = await api(`/api/admin/beers/${id}`, { method: "DELETE" });
+        if (!resp.ok || !data?.ok) {
+          alert(data?.error || "Error eliminando");
+          return;
+        }
+        await loadBeers();
+      });
+    });
+  }
+
+  async function saveBeer() {
+    const payload = {
+      nombre: nombre.value.trim(),
+      estilo: estilo.value.trim(),
+      precio: precio.value,
+      img: img.value.trim()
+    };
+
+    if (!payload.nombre || payload.precio === "" || payload.precio == null) {
+      alert("Nombre y precio son obligatorios");
+      return;
+    }
+
+    const id = beerId.value;
+    const url = id ? `/api/admin/beers/${id}` : "/api/admin/beers";
+    const method = id ? "PUT" : "POST";
+
+    const { resp, data } = await api(url, {
+      method,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    if (!resp.ok || !data?.ok) {
+      alert(data?.error || "Error guardando");
+      return;
+    }
+
+    clearForm();
+    await loadBeers();
+    alert("Guardado ✅ (Recarga el catálogo si quieres verlo ya)");
+  }
+
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, s => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    }[s]));
+  }
+
+  document.getElementById("loginBtn").addEventListener("click", login);
+  document.getElementById("logoutBtn").addEventListener("click", logout);
+  document.getElementById("saveBtn").addEventListener("click", saveBeer);
+  document.getElementById("clearBtn").addEventListener("click", clearForm);
+
+  // Estado inicial (no sabemos si hay sesión, intentamos cargar y si falla pide login)
+  (async () => {
+    const { resp } = await api("/api/admin/beers");
+    if (resp.ok) {
+      setLoggedInUI(true);
+      await loadBeers();
+    } else {
+      setLoggedInUI(false);
+    }
+  })();
+</script>
+</body>
+</html>

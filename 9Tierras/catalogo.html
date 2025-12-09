@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Catálogo - 9 Tierras</title>
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+
+  <!-- Modal (opcional, lo dejas si quieres usar detalles después) -->
+  <div id="detailsModal" class="modal" aria-hidden="true" role="dialog"
+       aria-labelledby="modalTitle" aria-describedby="modalDescription">
+    <div class="modal-content">
+      <button class="close" aria-label="Cerrar">×</button>
+      <h3 id="modalTitle"></h3>
+      <p id="modalDescription"></p>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header" id="h">
+    <nav class="nav container" aria-label="Principal">
+      <img src="css/img/LOGO.png" alt="Logo 9 Tierras" class="estilo-logo">
+
+      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-menu" aria-label="Abrir menú">☰</button>
+      <ul id="primary-menu" class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a class="active" href="catalogo.html">Catálogo</a></li>
+        <li><a href="reservas.html">Reservas</a></li>
+        <li><a href="index.html#contacto">Contacto</a></li>
+        <li><a href="admin.html">Admin</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero hero-sm">
+      <div class="container hero-content">
+        <h1>Catálogo de Cervezas</h1>
+        <p>Pequeños lotes, grandes historias. ¡Encuentra tu favorita!</p>
+
+        <!-- (Opcional) filtros: si aún no los programaste, no pasa nada -->
+        <div class="actions">
+          <input id="search" class="input" type="search" placeholder="Buscar…" aria-label="Buscar" />
+          <select id="filterStyle" aria-label="Filtrar por estilo" class="input">
+            <option value="">Todos</option>
+            <option value="IPA">IPA</option>
+            <option value="Stout">Stout</option>
+            <option value="Lager">Lager</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contenido -->
+    <section class="container section grid-layout">
+
+      <!-- ✅ AQUÍ SE PINTAN LAS CERVEZAS DESDE MONGO -->
+      <div id="productos" class="cards" aria-live="polite">
+        <p class="muted">Cargando cervezas...</p>
+      </div>
+
+      <!-- Carrito -->
+      <aside class="cart" aria-labelledby="cartTitle">
+        <div class="cart-head">
+          <h2 id="cartTitle">Carrito</h2>
+          <small class="muted">Agrega productos</small>
+        </div>
+
+        <ul id="cart" class="cart-list"></ul>
+
+        <div class="cart-total">
+          <span>Total</span>
+          <strong>$<span id="total">0</span></strong>
+        </div>
+
+        <!-- ✅ IMPORTANTE: este botón lo usa catalogo.js -->
+        <button id="checkoutBtn" class="btn primary" style="width:100%; margin-top: 10px;">
+          Finalizar compra
+        </button>
+      </aside>
+
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© <span id="year"></span> Cervecería 9 Tierras</small>
+    </div>
+  </footer>
+
+  <!-- ✅ Tu JS del catálogo (el que corregimos) -->
+  <script src="js/catalogo.js"></script>
+</body>
+</html>
