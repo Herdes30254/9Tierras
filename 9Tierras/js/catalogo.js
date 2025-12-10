@@ -1,3 +1,4 @@
+
 // -----------------------
 // CARRITO (persistente)
 // -----------------------
@@ -107,6 +108,12 @@ document.getElementById("checkoutBtn")?.addEventListener("click", async () => {
 });
 
 // -----------------------
+// VARIABLES GLOBALES PARA FILTROS
+// -----------------------
+let allProducts = [];
+let filteredProducts = [];
+
+// -----------------------
 // CARGAR PRODUCTOS DESDE MONGO  (GET /api/products)
 // -----------------------
 async function cargarProductos() {
@@ -124,46 +131,86 @@ async function cargarProductos() {
       return;
     }
 
-    contenedor.innerHTML = "";
-
     if (productos.length === 0) {
       contenedor.innerHTML = `<p class="muted">No hay cervezas en la base de datos.</p>`;
       return;
     }
 
-    productos.forEach(p => {
-      contenedor.insertAdjacentHTML("beforeend", `
-        <article class="card">
-          <figure class="card-media">
-            <img src="${p.image || "css/img/IPA.png"}" alt="${p.name}" class="beer-img" />
-          </figure>
-
-          <div class="card-body">
-            <h3 class="card-title">${p.name}</h3>
-
-            <div class="card-meta">
-              <span class="badge">${p.description || ""}</span>
-              <span class="price">$${money(p.price)}</span>
-            </div>
-
-            <div class="card-actions">
-              <button
-                class="btn primary add-to-cart"
-                data-id="${p._id}"
-                data-name="${p.name}"
-                data-price="${p.price}">
-                Añadir
-              </button>
-            </div>
-          </div>
-        </article>
-      `);
-    });
+    allProducts = productos;
+    filteredProducts = productos;
+    renderProducts(filteredProducts);
   } catch (err) {
     console.error(err);
     contenedor.innerHTML = `<p class="muted">Error cargando cervezas.</p>`;
   }
 }
+
+// -----------------------
+// RENDERIZAR PRODUCTOS
+// -----------------------
+function renderProducts(products) {
+  const contenedor = document.getElementById("productos");
+  if (!contenedor) return;
+
+  contenedor.innerHTML = "";
+
+  if (products.length === 0) {
+    contenedor.innerHTML = `<p class="muted">No se encontraron cervezas con ese criterio.</p>`;
+    return;
+  }
+
+  products.forEach(p => {
+    contenedor.insertAdjacentHTML("beforeend", `
+      <article class="card">
+        <figure class="card-media">
+          <img src="${p.image || "css/img/IPA.png"}" alt="${p.name}" class="beer-img" />
+        </figure>
+
+        <div class="card-body">
+          <h3 class="card-title">${p.name}</h3>
+
+          <div class="card-meta">
+            <span class="badge">${p.description || ""}</span>
+            <span class="price">$${money(p.price)}</span>
+          </div>
+
+          <div class="card-actions">
+            <button
+              class="btn primary add-to-cart"
+              data-id="${p._id}"
+              data-name="${p.name}"
+              data-price="${p.price}">
+              Añadir
+            </button>
+          </div>
+        </div>
+      </article>
+    `);
+  });
+}
+
+// -----------------------
+// FILTROS (BÚSQUEDA Y SABOR)
+// -----------------------
+function applyFilters() {
+  const searchValue = document.getElementById("search")?.value.toLowerCase().trim() || "";
+  const styleValue = document.getElementById("filterStyle")?.value || "";
+
+  filteredProducts = allProducts.filter(p => {
+    const matchSearch = p.name.toLowerCase().includes(searchValue) || 
+                       (p.description || "").toLowerCase().includes(searchValue);
+    
+    const matchStyle = !styleValue || (p.description || "").includes(styleValue);
+
+    return matchSearch && matchStyle;
+  });
+
+  renderProducts(filteredProducts);
+}
+
+// Event listeners para filtros
+document.getElementById("search")?.addEventListener("input", applyFilters);
+document.getElementById("filterStyle")?.addEventListener("change", applyFilters);
 
 // Delegación: añadir al carrito (importante que exista #productos)
 document.getElementById("productos")?.addEventListener("click", (e) => {
@@ -208,9 +255,7 @@ if (toggle && menu) {
 cargarProductos();
 renderCart();
 
-
 //Ocultar opcion del admin para usuarios normales
-
 document.addEventListener('DOMContentLoaded', () => {
   // Obtener usuario de la sesión
   const user = JSON.parse(sessionStorage.getItem('user'));

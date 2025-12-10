@@ -46,14 +46,20 @@
         <h1>Catálogo de Cervezas</h1>
         <p>Pequeños lotes, grandes historias. ¡Encuentra tu favorita!</p>
 
-        <!-- (Opcional) filtros: si aún no los programaste, no pasa nada -->
+        <!-- Filtros actualizados -->
         <div class="actions">
           <input id="search" class="input" type="search" placeholder="Buscar…" aria-label="Buscar" />
-          <select id="filterStyle" aria-label="Filtrar por estilo" class="input">
+          <select id="filterStyle" aria-label="Filtrar por sabor" class="input">
             <option value="">Todos</option>
-            <option value="IPA">IPA</option>
-            <option value="Stout">Stout</option>
-            <option value="Lager">Lager</option>
+            <option value="Cítrico">Cítrico</option>
+            <option value="Caramelo">Caramelo</option>
+            <option value="Frutal">Frutal</option>
+            <option value="Tropical">Tropical</option>
+            <option value="Miel">Miel</option>
+            <option value="Malta">Malta</option>
+            <option value="Resinoso">Resinoso</option>
+            <option value="Ahumado">Ahumado</option>
+            <option value="Herbal">Herbal</option>
           </select>
         </div>
       </div>
@@ -98,5 +104,25 @@
 
   <!-- ✅ Tu JS del catálogo (el que corregimos) -->
   <script src="js/catalogo.js"></script>
+
+    <script>
+    (function() {
+      const logo = document.querySelector('.estilo-logo');
+      
+      if (!logo) return;
+
+      window.addEventListener('scroll', function() {
+        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+        
+        if (currentScroll > 100) {
+          logo.style.opacity = '0';
+          logo.style.pointerEvents = 'none';
+        } else {
+          logo.style.opacity = '0.95';
+          logo.style.pointerEvents = 'auto';
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

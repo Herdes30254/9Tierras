@@ -29,29 +29,74 @@ async function run() {
     }
   }
 
-  // Insertar cervezas demo si beers está vacía
+  // ✅ ACTUALIZAR CERVEZAS (borra las viejas e inserta las nuevas)
   const beers = db.collection("beers");
-  const beersCount = await beers.countDocuments();
-  if (beersCount === 0) {
-    await beers.insertMany([
-      { nombre: "Rubia 9 Tierras", estilo: "Golden Ale", precio: 12000, img: "https://via.placeholder.com/400x300?text=Rubia+9+Tierras" },
-      { nombre: "Roja 9 Tierras", estilo: "Red Ale", precio: 13000, img: "https://via.placeholder.com/400x300?text=Roja+9+Tierras" },
-      { nombre: "Negra 9 Tierras", estilo: "Stout", precio: 14000, img: "https://via.placeholder.com/400x300?text=Negra+9+Tierras" }
-    ]);
-    console.log("🍺 Cervezas insertadas en beers");
-  } else {
-    console.log("🍺 beers ya tiene documentos:", beersCount);
-  }
+  
+  // Borrar todas las cervezas existentes para empezar limpio
+  await beers.deleteMany({});
+  console.log("🗑️  Cervezas antiguas eliminadas");
 
-  // Usuario demo
+  // Insertar las cervezas correctas con sabores actualizados
+  const nuevasCervezas = [
+    {
+      nombre: "IPA",
+      estilo: "Cítrico, Tropical, Herbal",
+      precio: 14012,
+      img: "css/img/IPA.jpeg"
+    },
+    {
+      nombre: "APA",
+      estilo: "Cítrico, Malta",
+      precio: 13000,
+      img: "css/img/APA.jpeg"
+    },
+    {
+      nombre: "Red Ale",
+      estilo: "Caramelo",
+      precio: 13500,
+      img: "css/img/REDALE.jpeg"
+    },
+    {
+      nombre: "Tripel",
+      estilo: "Frutal, Miel",
+      precio: 15000,
+      img: "css/img/TRIPEL.jpeg"
+    },
+    {
+      nombre: "Red IPA",
+      estilo: "Caramelo, Resinoso",
+      precio: 14500,
+      img: "css/img/REDIPA.jpeg"
+    },
+    {
+      nombre: "Smoked Porter",
+      estilo: "Malta, Ahumado",
+      precio: 16000,
+      img: "css/img/SMOKEDPORTER.jpeg"
+    }
+  ];
+
+  await beers.insertMany(nuevasCervezas);
+  console.log("🍺 Cervezas actualizadas:", nuevasCervezas.length);
+  
+  nuevasCervezas.forEach(c => {
+    console.log(`   ✅ ${c.nombre} - ${c.estilo} - $${c.precio.toLocaleString()}`);
+  });
+
+  // Usuario demo admin
   const users = db.collection("users");
   const demoEmail = "admin@9tierras.com";
   const existsUser = await users.findOne({ email: demoEmail });
   if (!existsUser) {
-    await users.insertOne({ email: demoEmail, password: "1234", createdAt: new Date() });
-    console.log("👤 Usuario demo creado:", demoEmail, "pass: 1234");
+    await users.insertOne({ 
+      email: demoEmail, 
+      password: "1234", 
+      role: "admin",
+      createdAt: new Date() 
+    });
+    console.log("👤 Usuario admin creado:", demoEmail, "pass: 1234");
   } else {
-    console.log("👤 Usuario demo ya existe:", demoEmail);
+    console.log("👤 Usuario admin ya existe:", demoEmail);
   }
 
   console.log("✅ Init-db terminado.");
