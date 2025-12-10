@@ -162,6 +162,28 @@
     }
   </script>
 
+    <script src="js/catalogo.js"></script>
+
+    <script>
+    (function() {
+      const logo = document.querySelector('.estilo-logo');
+      
+      if (!logo) return;
+
+      window.addEventListener('scroll', function() {
+        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+        
+        if (currentScroll > 100) {
+          logo.style.opacity = '0';
+          logo.style.pointerEvents = 'none';
+        } else {
+          logo.style.opacity = '0.95';
+          logo.style.pointerEvents = 'auto';
+        }
+      });
+    })();
+  </script>
+
 
 
 

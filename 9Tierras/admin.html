@@ -121,7 +121,7 @@
   const tbody = document.getElementById("tbody");
 
   async function api(url, options = {}) {
-    // ✅ importantísimo: credentials include para que mande la cookie de sesión
+    //  importantísimo: credentials include para que mande la cookie de sesión
     const resp = await fetch(url, { ...options, credentials: "include" });
     let data = null;
     try { data = await resp.json(); } catch {}
